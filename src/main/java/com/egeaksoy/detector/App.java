@@ -7,23 +7,26 @@ import com.egeaksoy.detector.api.KlineParser;
 import com.egeaksoy.detector.config.CoinConfig;
 import com.egeaksoy.detector.config.DetectorConfig;
 import com.egeaksoy.detector.model.Candle;
+import com.egeaksoy.detector.model.CoinMetrics;
+import com.egeaksoy.detector.service.MetricsCalculator;
 
 public class App {
 	  public static void main(String[] args) throws Exception {
 
-		  BinanceApiClient client = new BinanceApiClient();
+		  String symbol = "BTCUSDT";
 
-	        String json = client.getKlines("BTCUSDT", "5m", 2);
+	        BinanceApiClient client = new BinanceApiClient();
+	        String json = client.getKlines(symbol, "5m", 288);
 
 	        List<Candle> candles = KlineParser.parse(json);
 
-	        Candle first = candles.get(0);
-	        Candle second = candles.get(1);
+	        MetricsCalculator calculator = new MetricsCalculator();
+	        CoinMetrics metrics = calculator.calculate(symbol, candles);
 
-	        double priceChange = ((second.getClose() - first.getClose()) / first.getClose()) * 100;
-
-	        System.out.println("Price Change (%): " + priceChange);
-	        System.out.println("Base Volume (last candle) as BTC: " + second.getVolume());
-	        System.out.println("Quote Volume / USDT (last candle): " + second.getQuoteVolume());
+	        System.out.println("Symbol: " + metrics.getSymbol());
+	        System.out.printf("5m Price Change: %.2f%%%n", metrics.getPriceChange5mPct());
+	        System.out.printf("Current 5m Quote Volume: %.2f%n", metrics.getCurrent5mQuoteVolume());
+	        System.out.printf("Avg 24h 5m Quote Volume: %.2f%n", metrics.getAvg24h5mQuoteVolume());
+	        System.out.printf("Volume Uplift: %.2f%%%n", metrics.getVolumeUpliftPct());
 	    }
 }
