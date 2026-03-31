@@ -8,24 +8,20 @@ public class CoinConfig {
         return List.of(
                 "BTCUSDT",
                 "ETHUSDT",
-                "SOLUSDT",
-                "BNBUSDT",
-                "XRPUSDT",
-                "DOGEUSDT",
-                "ADAUSDT",
+                "ENSUSDT",
                 "AVAXUSDT",
-                "LINKUSDT",
-                "TONUSDT",
-                "SANTOSUSDT",
                 "PORTOUSDT",
                 "JOEUSDT",
-                "RAYUSDT",
                 "PSGUSDT",
                 "CITYUSDT",
                 "LAZIOUSDT",
-                "ALPINEUSDT",
-                "VOXELUSDT",
-                "LOKAUSDT"
+                "TWTUSDT",
+                "C98USDT",
+                "MANAUSDT",
+                "SANDUSDT",
+                "ENJUSDT",
+                "JUPUSDT",
+                "SOLUSDT"
         );
     }
 }

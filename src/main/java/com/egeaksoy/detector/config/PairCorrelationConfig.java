@@ -6,11 +6,13 @@ public class PairCorrelationConfig {
 
     public static Map<String, String> getCorrelatedPairs() {
         return Map.of(
-                "SANTOSUSDT", "PORTOUSDT",
-                "AVAXUSDT", "JOEUSDT",
-                "SOLUSDT", "RAYUSDT",
+                "LAZIOUSDT", "PORTOUSDT",
                 "CITYUSDT", "PSGUSDT",
-                "LOKAUSDT", "VOXELUSDT"
+                "MANAUSDT", "SANDUSDT",
+                "ENJUSDT", "SANDUSDT",
+                "SOLUSDT","JUPUSDT",
+                "AVAXUSDT","JOEUSDT",
+                "ENSUSDT","ETHUSDT"
         );
     }
 }
