@@ -7,6 +7,7 @@ import com.egeaksoy.detector.model.SignalType;
 import com.egeaksoy.detector.service.AnalysisService;
 import com.egeaksoy.detector.service.MetricsCalculator;
 import com.egeaksoy.detector.service.SignalEngine;
+import com.egeaksoy.detector.service.SignalHistoryService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,6 +53,8 @@ public class App {
                 (SignalResult r) -> r.getMainMetrics().getScore()
         ).reversed());
 
+        SignalHistoryService.persistSignals(allResults);
+        
         printTopSignals(allResults);
         printTopWatchlist(allResults);
         printFullSignalReview(allResults);

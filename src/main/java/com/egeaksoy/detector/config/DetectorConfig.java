@@ -13,25 +13,22 @@ public class DetectorConfig {
         return CURRENT_MODE;
     }
 
-    // Threshold getters
-
     public static double getMainPriceChangeMin() {
-        return CURRENT_MODE == Mode.TEST ? 0.5 : 2.0;
+        return CURRENT_MODE == Mode.TEST ? 0.10 : 2.0;
     }
 
     public static double getMainVolumeUpliftMin() {
-        return CURRENT_MODE == Mode.TEST ? 1.0 : 5.0;
+        return CURRENT_MODE == Mode.TEST ? 10.0 : 10.0;
     }
 
     public static double getCorrelatedPriceChangeMin() {
-        return CURRENT_MODE == Mode.TEST ? 0.2 : 1.0;
+        return CURRENT_MODE == Mode.TEST ? 0.05 : 1.0;
     }
 
     public static double getCorrelatedVolumeUpliftMin() {
-        return CURRENT_MODE == Mode.TEST ? 0.5 : 3.0;
+        return CURRENT_MODE == Mode.TEST ? 5.0 : 5.0;
     }
 
-    // Kline config
     public static final String INTERVAL = "5m";
     public static final int BASELINE_CANDLE_COUNT = 288;
 }
