@@ -7,6 +7,16 @@ public class CoinMetrics {
     private final double current5mQuoteVolume;
     private final double avg24h5mQuoteVolume;
     private final double volumeUpliftPct;
+    
+    private double score;
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 
     public CoinMetrics(String symbol,
                        double priceChange5mPct,
