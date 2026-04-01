@@ -8,6 +8,7 @@ import com.egeaksoy.detector.service.AnalysisService;
 import com.egeaksoy.detector.service.MetricsCalculator;
 import com.egeaksoy.detector.service.SignalEngine;
 import com.egeaksoy.detector.service.SignalHistoryService;
+import com.egeaksoy.detector.service.SignalMessageFormatter;
 import com.egeaksoy.detector.service.TelegramService;
 
 import java.time.LocalDateTime;
@@ -87,6 +88,13 @@ public class App {
                 mainMetrics.setScore(finalScore);
 
                 allResults.add(result);
+                
+                if (result.getSignalType() == SignalType.TRACK_CANDIDATE 
+                	    || result.getSignalType() == SignalType.STRONG_TRACK_CANDIDATE) {
+
+                	    String message = SignalMessageFormatter.format(result);
+                	    TelegramService.sendMessage(message);
+                	}
 
             } catch (Exception e) {
                 System.out.println("Error processing " + symbol + ": " + e.getMessage());
