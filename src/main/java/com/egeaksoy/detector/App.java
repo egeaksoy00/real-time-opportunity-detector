@@ -24,7 +24,7 @@ public class App {
     private static long lastProcessedCandleCloseTime = -1L;
 
     public static void main(String[] args) {
-    	TelegramService.sendMessage("🚀 Bot başarıyla çalışıyor!");
+    	
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         
         System.out.println("Real-Time Opportunity Detector started at " + LocalDateTime.now());
@@ -50,8 +50,14 @@ public class App {
         MetricsCalculator metricsCalculator = new MetricsCalculator();
 
         try {
+            System.out.println("Checking reference candle for BTCUSDT...");
+
             CoinMetrics referenceMetrics = analysisService.analyzeSymbol("BTCUSDT");
+
+            System.out.println("Reference candle fetched successfully.");
+
             long currentCandleCloseTime = referenceMetrics.getAnalyzedCandleCloseTime();
+            System.out.println("Reference candle close time: " + currentCandleCloseTime);
 
             if (currentCandleCloseTime == lastProcessedCandleCloseTime) {
                 System.out.println("No new 5m candle detected. Skipping this cycle.");
@@ -59,6 +65,7 @@ public class App {
             }
 
             lastProcessedCandleCloseTime = currentCandleCloseTime;
+            System.out.println("New 5m candle detected. Continuing full scan...");
 
         } catch (Exception e) {
             System.out.println("Failed to check reference candle: " + e.getMessage());

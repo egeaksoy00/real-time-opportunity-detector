@@ -32,8 +32,7 @@ public class TelegramService {
             }
 
             int responseCode = conn.getResponseCode();
-            System.out.println("BOT TOKEN NULL? " + (BOT_TOKEN == null));
-            System.out.println("CHAT ID NULL? " + (CHAT_ID == null));
+           
 
             if (responseCode != 200) {
                 System.out.println("Telegram error: " + responseCode);
