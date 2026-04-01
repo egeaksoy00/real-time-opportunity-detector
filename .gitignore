@@ -15,3 +15,8 @@ target/
 
 # Logs
 *.log
+
+.env
+*.log
+target/
+.DS_Store
