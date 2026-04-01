@@ -14,7 +14,7 @@ public class BinanceApiClient {
 
     public BinanceApiClient() {
         this.client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(10))
+                .connectTimeout(Duration.ofSeconds(5))
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class BinanceApiClient {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .timeout(Duration.ofSeconds(15))
+                .timeout(Duration.ofSeconds(8))
                 .GET()
                 .build();
 

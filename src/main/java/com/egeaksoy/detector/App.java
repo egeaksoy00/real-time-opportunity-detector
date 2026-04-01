@@ -24,9 +24,9 @@ public class App {
     private static long lastProcessedCandleCloseTime = -1L;
 
     public static void main(String[] args) {
-    	
+
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        
+
         System.out.println("Real-Time Opportunity Detector started at " + LocalDateTime.now());
         System.out.println("Scheduler active: scanning every 1 minute...\n");
 
@@ -50,14 +50,8 @@ public class App {
         MetricsCalculator metricsCalculator = new MetricsCalculator();
 
         try {
-            System.out.println("Checking reference candle for BTCUSDT...");
-
             CoinMetrics referenceMetrics = analysisService.analyzeSymbol("BTCUSDT");
-
-            System.out.println("Reference candle fetched successfully.");
-
             long currentCandleCloseTime = referenceMetrics.getAnalyzedCandleCloseTime();
-            System.out.println("Reference candle close time: " + currentCandleCloseTime);
 
             if (currentCandleCloseTime == lastProcessedCandleCloseTime) {
                 System.out.println("No new 5m candle detected. Skipping this cycle.");
@@ -76,7 +70,6 @@ public class App {
 
         for (String symbol : CoinConfig.getTrackedSymbols()) {
             try {
-            	System.out.println("Analyzing symbol: " + symbol);
                 CoinMetrics mainMetrics = analysisService.analyzeSymbol(symbol);
                 List<CoinMetrics> correlatedMetricsList = analysisService.analyzeCorrelatedSymbols(symbol);
 
@@ -96,13 +89,13 @@ public class App {
                 mainMetrics.setScore(finalScore);
 
                 allResults.add(result);
-                
-                if (result.getSignalType() == SignalType.TRACK_CANDIDATE 
-                	    || result.getSignalType() == SignalType.STRONG_TRACK_CANDIDATE) {
 
-                	    String message = SignalMessageFormatter.format(result);
-                	    TelegramService.sendMessage(message);
-                	}
+                if (result.getSignalType() == SignalType.TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.STRONG_TRACK_CANDIDATE) {
+
+                    String message = SignalMessageFormatter.format(result);
+                    TelegramService.sendMessage(message);
+                }
 
             } catch (Exception e) {
                 System.out.println("Error processing " + symbol + ": " + e.getMessage());
@@ -112,7 +105,7 @@ public class App {
         allResults.sort(Comparator.comparingDouble(
                 (SignalResult r) -> r.getMainMetrics().getScore()
         ).reversed());
-        
+
         long actionableCount = allResults.stream()
                 .filter(r -> r.getSignalType() != SignalType.IGNORE)
                 .count();
