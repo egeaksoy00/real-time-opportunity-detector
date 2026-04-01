@@ -9,7 +9,7 @@ import java.time.Duration;
 
 public class BinanceApiClient {
 
-    private static final String BASE_URL = "https://api.binance.com/api/v3/klines";
+	private static final String BASE_URL = "https://data-api.binance.vision/api/v3/klines";
     private final HttpClient client;
 
     public BinanceApiClient() {
