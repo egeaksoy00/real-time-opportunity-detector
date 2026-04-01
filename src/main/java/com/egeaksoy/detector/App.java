@@ -8,6 +8,7 @@ import com.egeaksoy.detector.service.AnalysisService;
 import com.egeaksoy.detector.service.MetricsCalculator;
 import com.egeaksoy.detector.service.SignalEngine;
 import com.egeaksoy.detector.service.SignalHistoryService;
+import com.egeaksoy.detector.service.TelegramService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ public class App {
     private static long lastProcessedCandleCloseTime = -1L;
 
     public static void main(String[] args) {
+    	TelegramService.sendMessage("🚀 Bot başarıyla çalışıyor!");
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
+        
         System.out.println("Real-Time Opportunity Detector started at " + LocalDateTime.now());
         System.out.println("Scheduler active: scanning every 1 minute...\n");
 
