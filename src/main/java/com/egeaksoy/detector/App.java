@@ -69,6 +69,7 @@ public class App {
 
         for (String symbol : CoinConfig.getTrackedSymbols()) {
             try {
+            	System.out.println("Analyzing symbol: " + symbol);
                 CoinMetrics mainMetrics = analysisService.analyzeSymbol(symbol);
                 List<CoinMetrics> correlatedMetricsList = analysisService.analyzeCorrelatedSymbols(symbol);
 
@@ -104,6 +105,13 @@ public class App {
         allResults.sort(Comparator.comparingDouble(
                 (SignalResult r) -> r.getMainMetrics().getScore()
         ).reversed());
+        
+        long actionableCount = allResults.stream()
+                .filter(r -> r.getSignalType() != SignalType.IGNORE)
+                .count();
+
+        System.out.println("Cycle completed. Total results: " + allResults.size()
+                + " | Actionable signals: " + actionableCount);
 
         SignalHistoryService.persistSignals(allResults);
 
