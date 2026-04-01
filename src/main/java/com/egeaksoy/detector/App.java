@@ -9,16 +9,58 @@ import com.egeaksoy.detector.service.MetricsCalculator;
 import com.egeaksoy.detector.service.SignalEngine;
 import com.egeaksoy.detector.service.SignalHistoryService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class App {
+
+    private static long lastProcessedCandleCloseTime = -1L;
+
     public static void main(String[] args) {
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
+        System.out.println("Real-Time Opportunity Detector started at " + LocalDateTime.now());
+        System.out.println("Scheduler active: scanning every 1 minute...\n");
+
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                runDetectionCycle();
+            } catch (Exception e) {
+                System.err.println("Detection cycle failed: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }, 0, 1, TimeUnit.MINUTES);
+    }
+
+    private static void runDetectionCycle() {
+        System.out.println("\n==================================================");
+        System.out.println("New detection cycle started at: " + LocalDateTime.now());
+        System.out.println("==================================================");
 
         AnalysisService analysisService = new AnalysisService();
         SignalEngine signalEngine = new SignalEngine();
         MetricsCalculator metricsCalculator = new MetricsCalculator();
+
+        try {
+            CoinMetrics referenceMetrics = analysisService.analyzeSymbol("BTCUSDT");
+            long currentCandleCloseTime = referenceMetrics.getAnalyzedCandleCloseTime();
+
+            if (currentCandleCloseTime == lastProcessedCandleCloseTime) {
+                System.out.println("No new 5m candle detected. Skipping this cycle.");
+                return;
+            }
+
+            lastProcessedCandleCloseTime = currentCandleCloseTime;
+
+        } catch (Exception e) {
+            System.out.println("Failed to check reference candle: " + e.getMessage());
+            return;
+        }
 
         List<SignalResult> allResults = new ArrayList<>();
 
@@ -54,7 +96,7 @@ public class App {
         ).reversed());
 
         SignalHistoryService.persistSignals(allResults);
-        
+
         printTopSignals(allResults);
         printTopWatchlist(allResults);
         printFullSignalReview(allResults);
@@ -130,6 +172,7 @@ public class App {
         System.out.printf("Score: %.2f%n", main.getScore());
         System.out.printf("5m Price Change: %.2f%%%n", main.getPriceChange5mPct());
         System.out.printf("Volume Uplift: %.2f%%%n", main.getVolumeUpliftPct());
+        System.out.printf("Analyzed Candle Close Time: %d%n", main.getAnalyzedCandleCloseTime());
 
         if (result.hasCorrelatedMetrics()) {
             System.out.println("Correlated Pairs:");

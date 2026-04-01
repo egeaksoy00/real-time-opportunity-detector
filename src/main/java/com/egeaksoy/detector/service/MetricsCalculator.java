@@ -31,7 +31,8 @@ public class MetricsCalculator {
                 priceChangePct,
                 current5mQuoteVolume,
                 avg24h5mQuoteVolume,
-                volumeUpliftPct
+                volumeUpliftPct,
+                latest.getCloseTime()
         );
     }
 

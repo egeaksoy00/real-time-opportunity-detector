@@ -16,12 +16,25 @@ public class KlineParser {
         for (int i = 0; i < array.length(); i++) {
             JSONArray kline = array.getJSONArray(i);
 
+            long openTime = kline.getLong(0);
             double open = Double.parseDouble(kline.getString(1));
+            double high = Double.parseDouble(kline.getString(2));
+            double low = Double.parseDouble(kline.getString(3));
             double close = Double.parseDouble(kline.getString(4));
             double volume = Double.parseDouble(kline.getString(5));
+            long closeTime = kline.getLong(6);
             double quoteVolume = Double.parseDouble(kline.getString(7));
 
-            candles.add(new Candle(open, close, volume, quoteVolume));
+            candles.add(new Candle(
+                    openTime,
+                    open,
+                    high,
+                    low,
+                    close,
+                    volume,
+                    closeTime,
+                    quoteVolume
+            ));
         }
 
         return candles;
