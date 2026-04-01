@@ -21,7 +21,11 @@ public class PairCorrelationConfig {
                 Map.entry("JOEUSDT", List.of("AVAXUSDT")),
 
                 Map.entry("ENSUSDT", List.of("ETHUSDT")),
-                Map.entry("ETHUSDT", List.of("ENSUSDT"))
+                Map.entry("ETHUSDT", List.of("ENSUSDT")),
+                Map.entry("SOLUSDT", List.of("JUPUSDT")),
+                Map.entry("JUPUSDT", List.of("SOLUSDT")),
+                Map.entry("TWTUSDT", List.of("C98USDT")),
+                Map.entry("C98USDT", List.of("TWTUSDT"))
         );
     }
 }
