@@ -4,23 +4,19 @@ import java.util.List;
 
 public class SignalResult {
 
-    private final SignalType signalType;
     private final CoinMetrics mainMetrics;
     private final List<CoinMetrics> correlatedMetricsList;
+    private final SignalType signalType;
     private final String reason;
 
-    public SignalResult(SignalType signalType,
-                        CoinMetrics mainMetrics,
+    public SignalResult(CoinMetrics mainMetrics,
                         List<CoinMetrics> correlatedMetricsList,
+                        SignalType signalType,
                         String reason) {
-        this.signalType = signalType;
         this.mainMetrics = mainMetrics;
         this.correlatedMetricsList = correlatedMetricsList;
+        this.signalType = signalType;
         this.reason = reason;
-    }
-
-    public SignalType getSignalType() {
-        return signalType;
     }
 
     public CoinMetrics getMainMetrics() {
@@ -29,6 +25,10 @@ public class SignalResult {
 
     public List<CoinMetrics> getCorrelatedMetricsList() {
         return correlatedMetricsList;
+    }
+
+    public SignalType getSignalType() {
+        return signalType;
     }
 
     public String getReason() {
