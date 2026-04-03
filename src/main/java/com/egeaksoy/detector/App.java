@@ -80,9 +80,11 @@ public class App {
 
                 double finalScore = mainMetrics.getScore();
 
-                if (result.getSignalType() == SignalType.STRONG_TRACK_CANDIDATE) {
+                if (result.getSignalType() == SignalType.LONG_STRONG_TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.SHORT_STRONG_TRACK_CANDIDATE) {
                     finalScore *= 1.5;
-                } else if (result.getSignalType() == SignalType.TRACK_CANDIDATE) {
+                } else if (result.getSignalType() == SignalType.LONG_TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.SHORT_TRACK_CANDIDATE) {
                     finalScore *= 1.2;
                 }
 
@@ -90,8 +92,10 @@ public class App {
 
                 allResults.add(result);
 
-                if (result.getSignalType() == SignalType.TRACK_CANDIDATE
-                        || result.getSignalType() == SignalType.STRONG_TRACK_CANDIDATE) {
+                if (result.getSignalType() == SignalType.LONG_TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.LONG_STRONG_TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.SHORT_TRACK_CANDIDATE
+                        || result.getSignalType() == SignalType.SHORT_STRONG_TRACK_CANDIDATE) {
 
                     String message = SignalMessageFormatter.format(result);
                     TelegramService.sendMessage(message);
@@ -145,10 +149,10 @@ public class App {
     }
 
     private static void printTopWatchlist(List<SignalResult> allResults) {
-        System.out.println("\n=== TOP MOMENTUM WATCHLIST ===\n");
+        System.out.println("\n=== TOP SIGNALS ===\n");
 
         List<SignalResult> watchlist = allResults.stream()
-                .filter(result -> result.getMainMetrics().getPriceChange5mPct() > 0)
+        		.filter(result -> result.getSignalType() != SignalType.IGNORE)
                 .limit(5)
                 .toList();
 

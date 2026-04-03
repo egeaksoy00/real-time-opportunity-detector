@@ -37,17 +37,13 @@ public class MetricsCalculator {
     }
 
     public double calculateScore(CoinMetrics metrics) {
-        double price = metrics.getPriceChange5mPct();
+        double price = Math.abs(metrics.getPriceChange5mPct());
         double volume = metrics.getVolumeUpliftPct();
 
-        if (price <= 0) {
-            return 0;
-        }
-
-                if (volume < 0) {
+        if (volume < 0) {
             volume = 0;
         }
 
-        return (price * 0.6) + (volume * 0.4);
+        return (price * 0.7) + (volume * 0.3);
     }
 }
