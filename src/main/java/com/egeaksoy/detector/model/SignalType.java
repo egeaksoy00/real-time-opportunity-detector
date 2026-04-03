@@ -2,6 +2,10 @@ package com.egeaksoy.detector.model;
 
 public enum SignalType {
     IGNORE,
-    TRACK_CANDIDATE,
-    STRONG_TRACK_CANDIDATE
+
+    LONG_TRACK_CANDIDATE,
+    LONG_STRONG_TRACK_CANDIDATE,
+
+    SHORT_TRACK_CANDIDATE,
+    SHORT_STRONG_TRACK_CANDIDATE
 }
