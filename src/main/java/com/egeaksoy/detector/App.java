@@ -149,7 +149,7 @@ public class App {
     }
 
     private static void printTopWatchlist(List<SignalResult> allResults) {
-        System.out.println("\n=== TOP SIGNALS ===\n");
+        System.out.println("\n=== TOP ACTIONABLE WATCHLIST ===\n");
 
         List<SignalResult> watchlist = allResults.stream()
         		.filter(result -> result.getSignalType() != SignalType.IGNORE)
@@ -157,7 +157,7 @@ public class App {
                 .toList();
 
         if (watchlist.isEmpty()) {
-            System.out.println("No positive short-term momentum candidates found.");
+        	System.out.println("No actionable long or short candidates found.");
             return;
         }
 
